@@ -63,6 +63,15 @@ Frontend development patterns for React, Next.js, and performant UIs:
 - **Performance** — Memoization, code splitting, virtualization, form optimization
 - **Accessibility & animation** — Keyboard navigation, focus management, ARIA, Framer Motion
 
+### backend-patterns
+
+Backend architecture patterns for scalable server-side applications:
+
+- **Architecture patterns** — Repository / Service / Controller layers, middleware pipeline, dependency injection
+- **Database optimization** — N+1 prevention, SELECT minimization, transactions, indexing, connection pooling, pagination
+- **Caching strategies** — Redis decorator pattern, Cache-Aside, multi-level caching, HTTP cache headers
+- **Resilience patterns** — Rate limiting, background jobs, structured logging, health checks, graceful shutdown
+
 ### e2e-testing
 
 Playwright E2E testing patterns:
@@ -91,6 +100,7 @@ cp -r auth ~/.claude/skills/auth
 cp -r database ~/.claude/skills/database
 cp -r coding-standards ~/.claude/skills/coding-standards
 cp -r frontend-patterns ~/.claude/skills/frontend-patterns
+cp -r backend-patterns ~/.claude/skills/backend-patterns
 cp -r e2e-testing ~/.claude/skills/e2e-testing
 cp -r security-review ~/.claude/skills/security-review
 ```
