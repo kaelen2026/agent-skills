@@ -16,6 +16,7 @@ last_updated: 2026-03-17
 - **提交规范** — 编写符合 Conventional Commits 的提交信息，配置 commitlint / husky
 - **版本发布** — 语义化版本管理、打标签、生成 Changelog
 - **变更日志** — 自动或手动维护 CHANGELOG.md
+- **并行开发** — 使用 Git Worktree 同时在多个分支上工作
 
 ## 工作流程
 
@@ -51,6 +52,14 @@ last_updated: 2026-03-17
 2. 配置语义化版本和自动 Changelog 生成工具
 3. 设置 GitHub Actions 自动发布流水线
 
+### 第五步：掌握 Worktree 并行开发
+
+当需要同时在多个分支上工作时（紧急修复、并行功能开发、Code Review），使用 Git Worktree。
+
+1. 阅读 [references/worktree-patterns.md](references/worktree-patterns.md)
+2. 确认团队的 worktree 目录结构约定（同级目录 vs 子目录）
+3. 了解依赖管理、端口分配等注意事项
+
 ## 审查清单
 
 在完成 Git 工作流配置后，逐项确认：
@@ -65,6 +74,8 @@ last_updated: 2026-03-17
 - [ ] **Changelog 自动生成** — 工具已配置，发布时自动更新
 - [ ] **发布流水线已就绪** — 标签推送即可触发自动发布
 - [ ] **过期分支清理机制** — 已合并分支定期清理，避免仓库膨胀
+- [ ] **Worktree 使用规范** — 完成后及时清理，不手动删除目录
+- [ ] **Worktree 目录约定** — 命名统一，位置一致（同级或子目录）
 
 ## 参考文档
 
@@ -73,3 +84,4 @@ last_updated: 2026-03-17
 | [分支策略](references/branching-strategy.md) | 分支模型对比、命名规范、PR 模板、保护规则 |
 | [提交规范](references/commit-conventions.md) | Conventional Commits、commitlint、husky 配置 |
 | [发布流程](references/release-workflow.md) | 语义化版本、Changelog、GitHub Actions 发布 |
+| [Worktree 并行开发](references/worktree-patterns.md) | Worktree 操作、工作流、目录约定、清理策略 |
