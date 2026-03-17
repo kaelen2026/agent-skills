@@ -136,27 +136,56 @@ Technical documentation and architecture decision records:
 - **Project docs** — README, CONTRIBUTING, CHANGELOG, GitHub templates
 - **API docs** — Endpoint documentation, SDK examples, versioning, migration guides
 
+### tdd-workflow
+
+Test-driven development workflow enforcing test-first discipline:
+
+- **TDD cycle** — RED (write failing test) → GREEN (minimal implementation) → IMPROVE (refactor)
+- **Test patterns** — Unit (Vitest/Jest), integration (API routes), E2E (Playwright) with AAA pattern
+- **Quality gates** — 80%+ coverage threshold, no skipped tests, independent test isolation
+
+### planning
+
+Implementation planning skill providing standardized templates for specs, plans, and architecture design:
+
+- **Feature spec** — User stories, functional requirements (MUST/SHOULD/COULD), API/DB changes, acceptance criteria
+- **Implementation plan** — Phased task breakdown, file manifests, dependency graphs, risk assessment
+- **Architecture design** — Tech selection framework, trade-off analysis, C4 model, common pattern guidance (Monolith vs Microservices, SSR vs SPA, SQL vs NoSQL)
+
 ## Installation
 
-Copy a skill directory into `~/.claude/skills/`:
+Symlink skill directories into `~/.claude/skills/` (source updates are reflected automatically):
 
 ```bash
-cp -r api-design ~/.claude/skills/api-design
-cp -r error-handling ~/.claude/skills/error-handling
-cp -r auth ~/.claude/skills/auth
-cp -r database ~/.claude/skills/database
-cp -r coding-standards ~/.claude/skills/coding-standards
-cp -r frontend-patterns ~/.claude/skills/frontend-patterns
-cp -r backend-patterns ~/.claude/skills/backend-patterns
-cp -r e2e-testing ~/.claude/skills/e2e-testing
-cp -r security-review ~/.claude/skills/security-review
-cp -r git-workflow ~/.claude/skills/git-workflow
-cp -r ci-cd ~/.claude/skills/ci-cd
-cp -r code-review ~/.claude/skills/code-review
-cp -r performance ~/.claude/skills/performance
-cp -r observability ~/.claude/skills/observability
-cp -r documentation ~/.claude/skills/documentation
-cp -r tdd-workflow ~/.claude/skills/tdd-workflow
+mkdir -p ~/.claude/skills
+
+# From the repo root
+ln -sf "$(pwd)/api-design" ~/.claude/skills/api-design
+ln -sf "$(pwd)/error-handling" ~/.claude/skills/error-handling
+ln -sf "$(pwd)/auth" ~/.claude/skills/auth
+ln -sf "$(pwd)/database" ~/.claude/skills/database
+ln -sf "$(pwd)/coding-standards" ~/.claude/skills/coding-standards
+ln -sf "$(pwd)/frontend-patterns" ~/.claude/skills/frontend-patterns
+ln -sf "$(pwd)/backend-patterns" ~/.claude/skills/backend-patterns
+ln -sf "$(pwd)/e2e-testing" ~/.claude/skills/e2e-testing
+ln -sf "$(pwd)/security-review" ~/.claude/skills/security-review
+ln -sf "$(pwd)/git-workflow" ~/.claude/skills/git-workflow
+ln -sf "$(pwd)/ci-cd" ~/.claude/skills/ci-cd
+ln -sf "$(pwd)/code-review" ~/.claude/skills/code-review
+ln -sf "$(pwd)/performance" ~/.claude/skills/performance
+ln -sf "$(pwd)/observability" ~/.claude/skills/observability
+ln -sf "$(pwd)/documentation" ~/.claude/skills/documentation
+ln -sf "$(pwd)/tdd-workflow" ~/.claude/skills/tdd-workflow
+ln -sf "$(pwd)/planning" ~/.claude/skills/planning
+```
+
+Or link all skills at once:
+
+```bash
+mkdir -p ~/.claude/skills
+for skill in */; do
+  [ -f "$skill/SKILL.md" ] && ln -sf "$(pwd)/$skill" ~/.claude/skills/
+done
 ```
 
 ## License
