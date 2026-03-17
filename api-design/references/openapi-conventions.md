@@ -42,10 +42,10 @@ security:
 
 ### 属性命名
 
-- 使用 snake_case: `created_at`, `user_id`, `order_items`
-- 布尔字段使用 `is_` / `has_` 前缀: `is_active`, `has_permission`
-- 时间字段使用 `_at` 后缀: `created_at`, `updated_at`, `deleted_at`
-- ID 字段: `id`（主键）, `{resource}_id`（外键）
+- 使用 camelCase: `createdAt`, `userId`, `orderItems`
+- 布尔字段使用 `is` / `has` 前缀: `isActive`, `hasPermission`
+- 时间字段使用 `At` 后缀: `createdAt`, `updatedAt`, `deletedAt`
+- ID 字段: `id`（主键）, `{resource}Id`（外键）
 
 ## Schema 定义模式
 
@@ -58,7 +58,7 @@ User:
     - id
     - name
     - email
-    - created_at
+    - createdAt
   properties:
     id:
       type: string
@@ -77,13 +77,13 @@ User:
       type: string
       enum: [admin, user]
       default: user
-    is_active:
+    isActive:
       type: boolean
       default: true
-    created_at:
+    createdAt:
       type: string
       format: date-time
-    updated_at:
+    updatedAt:
       type: string
       format: date-time
       nullable: true
@@ -131,12 +131,17 @@ ApiResponse:
 
 Meta:
   type: object
-  description: "Pagination and other metadata"
+  description: "Request tracking and pagination metadata"
+  required:
+    - requestId
   properties:
+    requestId:
+      type: string
+      description: "Unique request identifier for tracing"
     cursor:
       type: string
       nullable: true
-    has_more:
+    hasMore:
       type: boolean
     total:
       type: integer
@@ -216,6 +221,21 @@ ErrorResponse:
           $ref: "#/components/schemas/ApiError"
 ```
 
+## 共享参数
+
+```yaml
+components:
+  parameters:
+    DeviceType:
+      name: X-Device-Type
+      in: header
+      required: true
+      description: "Client device type"
+      schema:
+        type: string
+        enum: [web, app, desktop]
+```
+
 ## 端点定义模式
 
 ```yaml
@@ -225,6 +245,7 @@ ErrorResponse:
     operationId: listUsers
     tags: [Users]
     parameters:
+      - $ref: "#/components/parameters/DeviceType"
       - name: cursor
         in: query
         schema:
@@ -250,6 +271,8 @@ ErrorResponse:
     summary: "Create a user"
     operationId: createUser
     tags: [Users]
+    parameters:
+      - $ref: "#/components/parameters/DeviceType"
     requestBody:
       required: true
       content:

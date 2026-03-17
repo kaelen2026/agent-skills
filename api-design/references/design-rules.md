@@ -57,14 +57,23 @@
 
 ## 统一响应格式
 
-所有 API 响应使用统一信封（envelope）：
+所有 API 响应使用统一信封（envelope），属性使用 **camelCase**：
 
 ```typescript
 interface ApiResponse<T = unknown> {
   success: boolean;       // 始终存在
   data?: T;               // 成功时的业务数据
-  meta?: Meta;            // 分页、速率限制等元信息
+  meta?: Meta;            // 分页、请求追踪等元信息
   error?: ApiError;       // 失败时的错误信息
+}
+
+interface Meta {
+  requestId: string;      // 始终存在，用于追踪和调试
+  cursor?: string;        // 分页游标
+  hasMore?: boolean;      // 是否有更多数据
+  total?: number;         // 总数（offset 分页）
+  offset?: number;
+  limit?: number;
 }
 ```
 
@@ -76,7 +85,11 @@ interface ApiResponse<T = unknown> {
   "data": {
     "id": "uuid",
     "name": "Alice",
-    "email": "alice@example.com"
+    "email": "alice@example.com",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  "meta": {
+    "requestId": "req_abc123"
   }
 }
 ```
@@ -91,8 +104,9 @@ interface ApiResponse<T = unknown> {
     { "id": "uuid-2", "name": "Bob" }
   ],
   "meta": {
+    "requestId": "req_abc123",
     "cursor": "eyJpZCI6MTIwfQ",
-    "has_more": true
+    "hasMore": true
   }
 }
 ```
@@ -112,6 +126,9 @@ interface ApiResponse<T = unknown> {
         "code": "invalid_string"
       }
     ]
+  },
+  "meta": {
+    "requestId": "req_abc123"
   }
 }
 ```
@@ -119,14 +136,16 @@ interface ApiResponse<T = unknown> {
 ### 规则
 
 - `success` 始终存在，`true` 或 `false`
-- 成功时只有 `data`（和可选的 `meta`），不含 `error`
-- 失败时只有 `error`，不含 `data`
-- `meta` 用于分页、速率限制等非业务数据，成功/失败均可携带
+- `meta.requestId` 始终存在，成功和失败均携带
+- 成功时只有 `data`（和 `meta`），不含 `error`
+- 失败时只有 `error`（和 `meta`），不含 `data`
+- `meta` 用于分页、请求追踪等非业务数据
 - 204 No Content 无响应体，是唯一例外
+- **所有响应属性使用 camelCase**（`createdAt` 而非 `created_at`）
 
 ### 错误码命名
 
-- 使用 UPPER_SNAKE_CASE
+- 使用 UPPER_SNAKE_CASE（仅错误码本身，非属性名）
 - 具有描述性: `RESOURCE_NOT_FOUND`, `DUPLICATE_EMAIL`, `RATE_LIMIT_EXCEEDED`
 - 不暴露内部实现细节
 
@@ -142,8 +161,9 @@ Response:
   "success": true,
   "data": [...],
   "meta": {
+    "requestId": "req_abc123",
     "cursor": "eyJpZCI6MTIwfQ",
-    "has_more": true
+    "hasMore": true
   }
 }
 ```
@@ -158,6 +178,7 @@ Response:
   "success": true,
   "data": [...],
   "meta": {
+    "requestId": "req_abc123",
     "total": 150,
     "offset": 0,
     "limit": 20
@@ -168,7 +189,7 @@ Response:
 ## 筛选与排序
 
 ```
-GET /v1/users?status=active&sort=-created_at,name&fields=id,name,email
+GET /v1/users?status=active&sort=-createdAt,name&fields=id,name,email
 ```
 
 - 筛选: query parameter 直接对应字段名
@@ -192,15 +213,34 @@ const createUserSchema = z.object({
 const validated = createUserSchema.parse(req.body);
 ```
 
-## 认证
+## 必需请求头
 
-### Bearer Token
+### X-Device-Type
+
+所有请求必须携带 `X-Device-Type` 头，标识客户端类型：
+
+```
+X-Device-Type: web | app | desktop
+```
+
+| 值        | 说明             |
+| --------- | ---------------- |
+| `web`     | 浏览器 Web 端    |
+| `app`     | 移动端 App       |
+| `desktop` | 桌面客户端       |
+
+- 缺少该头: 400 `MISSING_DEVICE_TYPE`
+- 值不合法: 400 `INVALID_DEVICE_TYPE`
+
+### 认证
+
+#### Bearer Token
 
 ```
 Authorization: Bearer <token>
 ```
 
-### 响应
+### 认证响应
 
 - 缺少 token: 401 `AUTHENTICATION_REQUIRED`
 - 无效 token: 401 `INVALID_TOKEN`
@@ -224,5 +264,5 @@ X-RateLimit-Reset: 1620000000
 - 不在 URL 中传递敏感信息（token, password）
 - 不在错误消息中暴露堆栈跟踪或内部路径
 - 所有列表端点必须有分页限制（默认 20，最大 100）
-- DELETE 操作使用软删除（设置 `deleted_at`），除非明确要求硬删除
+- DELETE 操作使用软删除（设置 `deletedAt`），除非明确要求硬删除
 - 写操作需要 CSRF 保护（适用于 cookie 认证场景）

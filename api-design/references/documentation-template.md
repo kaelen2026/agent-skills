@@ -19,26 +19,36 @@
 
 \`\`\`
 Authorization: Bearer <your-token>
+X-Device-Type: web | app | desktop
 \`\`\`
+
+### Required Headers
+
+| Header           | Required | Values                  | Description        |
+| ---------------- | -------- | ----------------------- | ------------------ |
+| `Authorization`  | Yes      | `Bearer <token>`        | Authentication     |
+| `X-Device-Type`  | Yes      | `web`, `app`, `desktop` | Client device type |
 
 ## Response Envelope
 
-All responses use a unified envelope format:
+All responses use a unified envelope format (camelCase):
 
 \`\`\`json
 {
   "success": true,
   "data": { ... },
-  "meta": { ... }
+  "meta": {
+    "requestId": "req_abc123"
+  }
 }
 \`\`\`
 
-| Field     | Type    | Always | Description                          |
-| --------- | ------- | ------ | ------------------------------------ |
-| `success` | boolean | Yes    | `true` on success, `false` on error  |
-| `data`    | any     | No     | Response payload (success only)      |
-| `meta`    | object  | No     | Pagination, rate limiting metadata   |
-| `error`   | object  | No     | Error details (failure only)         |
+| Field     | Type    | Always | Description                              |
+| --------- | ------- | ------ | ---------------------------------------- |
+| `success` | boolean | Yes    | `true` on success, `false` on error      |
+| `data`    | any     | No     | Response payload (success only)          |
+| `meta`    | object  | Yes    | Always contains `requestId`, plus pagination |
+| `error`   | object  | No     | Error details (failure only)             |
 
 ## Endpoints
 
@@ -66,12 +76,13 @@ GET /v1/{resources}
     {
       "id": "uuid",
       "name": "Example",
-      "created_at": "2026-01-01T00:00:00Z"
+      "createdAt": "2026-01-01T00:00:00Z"
     }
   ],
   "meta": {
+    "requestId": "req_abc123",
     "cursor": "eyJpZCI6MTAwfQ",
-    "has_more": true
+    "hasMore": true
   }
 }
 \`\`\`
@@ -102,7 +113,10 @@ POST /v1/{resources}
     "id": "uuid",
     "name": "Example",
     "email": "user@example.com",
-    "created_at": "2026-01-01T00:00:00Z"
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  "meta": {
+    "requestId": "req_def456"
   }
 }
 \`\`\`
@@ -130,7 +144,10 @@ GET /v1/{resources}/:id
     "id": "uuid",
     "name": "Example",
     "email": "user@example.com",
-    "created_at": "2026-01-01T00:00:00Z"
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  "meta": {
+    "requestId": "req_ghi789"
   }
 }
 \`\`\`
@@ -160,7 +177,10 @@ PATCH /v1/{resources}/:id
     "id": "uuid",
     "name": "Updated Name",
     "email": "user@example.com",
-    "created_at": "2026-01-01T00:00:00Z"
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  "meta": {
+    "requestId": "req_jkl012"
   }
 }
 \`\`\`
@@ -188,6 +208,9 @@ All errors follow the same envelope with `success: false`:
     "code": "ERROR_CODE",
     "message": "Human-readable description",
     "details": []
+  },
+  "meta": {
+    "requestId": "req_err001"
   }
 }
 \`\`\`

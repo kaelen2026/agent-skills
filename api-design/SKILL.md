@@ -77,6 +77,9 @@ last_updated: 2026-03-17
 - [ ] 正确使用 HTTP 方法语义
 - [ ] 一致的错误响应格式
 - [ ] 统一响应信封（`success`, `data?`, `meta?`, `error?`）
+- [ ] `meta.requestId` 始终存在
+- [ ] 所有响应属性使用 camelCase
+- [ ] `X-Device-Type` header 已定义和验证
 - [ ] 分页参数规范
 - [ ] 幂等性保证（PUT/DELETE）
 - [ ] 适当的 HTTP 状态码
