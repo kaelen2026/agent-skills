@@ -1,0 +1,75 @@
+---
+name: git-workflow
+version: 1.0.0
+description: Git 工作流管理技能 — 分支策略、提交规范、PR 流程与版本发布的完整指南
+last_updated: 2026-03-17
+---
+
+# Git 工作流技能
+
+## 何时激活
+
+当用户请求涉及以下场景时，激活此技能：
+
+- **分支管理** — 创建、命名、保护分支，选择分支策略
+- **PR 工作流** — 创建 Pull Request、设置审查规则、合并策略
+- **提交规范** — 编写符合 Conventional Commits 的提交信息，配置 commitlint / husky
+- **版本发布** — 语义化版本管理、打标签、生成 Changelog
+- **变更日志** — 自动或手动维护 CHANGELOG.md
+
+## 工作流程
+
+### 第一步：确定分支策略
+
+根据团队规模和发布频率选择合适的分支策略。
+
+1. 阅读 [references/branching-strategy.md](references/branching-strategy.md) 了解三种主流策略的对比
+2. **推荐大多数项目使用 GitHub Flow**（简洁、适合持续部署）
+3. 确认分支命名规范和保护规则
+
+### 第二步：配置提交规范
+
+确保每一次提交都清晰、可追溯。
+
+1. 阅读 [references/commit-conventions.md](references/commit-conventions.md)
+2. 在项目中配置 `commitlint` + `husky` + `lint-staged`
+3. 向团队成员说明提交类型和格式要求
+
+### 第三步：设置 PR 规则
+
+保证代码质量和团队协作效率。
+
+1. 参照 [references/branching-strategy.md](references/branching-strategy.md) 中的 PR 模板
+2. 配置分支保护规则（必须审查、CI 通过、禁止强制推送）
+3. 确定合并策略：功能分支使用 Squash Merge，发布分支使用 Merge Commit
+
+### 第四步：配置发布流程
+
+自动化版本管理和变更日志生成。
+
+1. 阅读 [references/release-workflow.md](references/release-workflow.md)
+2. 配置语义化版本和自动 Changelog 生成工具
+3. 设置 GitHub Actions 自动发布流水线
+
+## 审查清单
+
+在完成 Git 工作流配置后，逐项确认：
+
+- [ ] **分支策略已确定** — 团队成员理解并认同所选策略
+- [ ] **分支命名规范已统一** — 使用 `feat/`、`fix/`、`refactor/` 等标准前缀
+- [ ] **分支保护规则已启用** — 主分支禁止直接推送，要求审查和 CI 通过
+- [ ] **提交规范已配置** — commitlint 和 husky 已安装并正常工作
+- [ ] **PR 模板已创建** — `.github/pull_request_template.md` 已就位
+- [ ] **合并策略已明确** — 功能分支 Squash、发布分支 Merge Commit
+- [ ] **版本号遵循 SemVer** — MAJOR.MINOR.PATCH 规则无歧义
+- [ ] **Changelog 自动生成** — 工具已配置，发布时自动更新
+- [ ] **发布流水线已就绪** — 标签推送即可触发自动发布
+- [ ] **过期分支清理机制** — 已合并分支定期清理，避免仓库膨胀
+
+## 参考文档
+
+| 文档 | 内容 |
+|------|------|
+| [分支策略](references/branching-strategy.md) | 分支模型对比、命名规范、PR 模板、保护规则 |
+| [提交规范](references/commit-conventions.md) | Conventional Commits、commitlint、husky 配置 |
+| [发布流程](references/release-workflow.md) | 语义化版本、Changelog、GitHub Actions 发布 |

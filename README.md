@@ -89,6 +89,53 @@ Security review and OWASP Top 10 compliance:
 - **Auth & access** — Token storage, authorization checks, RLS, security testing
 - **Deployment checklist** — Pre-deployment security verification
 
+### git-workflow
+
+Git branching, commit conventions, and release management:
+
+- **Branching strategy** — GitHub Flow, branch naming, PR template, protection rules
+- **Commit conventions** — Conventional Commits, commitlint, husky + lint-staged
+- **Release workflow** — Semantic Versioning, changelog generation, hotfix flow
+
+### ci-cd
+
+CI/CD pipeline design and deployment automation:
+
+- **Pipeline design** — GitHub Actions workflows, caching, parallel jobs, monorepo CI
+- **Deployment strategies** — Blue-green, canary, rolling, feature flags
+- **Environment management** — Tier config, secret management, preview deployments
+
+### code-review
+
+Code review process and quality checklist:
+
+- **Review checklist** — Correctness, security, performance, maintainability, type safety
+- **Review process** — Feedback patterns, approval criteria, PR size guidelines, CODEOWNERS
+
+### performance
+
+Frontend and backend performance optimization:
+
+- **Web Vitals** — LCP, INP, CLS optimization, image/font/bundle optimization
+- **Backend performance** — Query optimization, caching layers, compression, pagination
+- **Load testing** — k6 scripts, test types, performance budgets, CI integration
+
+### observability
+
+Monitoring, logging, and distributed tracing:
+
+- **Logging** — Structured JSON logging, pino setup, sensitive data filtering
+- **Monitoring & alerting** — RED/USE methods, SLO/SLI, dashboard design, alert rules
+- **Tracing** — OpenTelemetry, requestId propagation, health checks, graceful degradation
+
+### documentation
+
+Technical documentation and architecture decision records:
+
+- **ADR template** — Architecture Decision Records with examples
+- **Project docs** — README, CONTRIBUTING, CHANGELOG, GitHub templates
+- **API docs** — Endpoint documentation, SDK examples, versioning, migration guides
+
 ## Installation
 
 Copy a skill directory into `~/.claude/skills/`:
@@ -103,6 +150,13 @@ cp -r frontend-patterns ~/.claude/skills/frontend-patterns
 cp -r backend-patterns ~/.claude/skills/backend-patterns
 cp -r e2e-testing ~/.claude/skills/e2e-testing
 cp -r security-review ~/.claude/skills/security-review
+cp -r git-workflow ~/.claude/skills/git-workflow
+cp -r ci-cd ~/.claude/skills/ci-cd
+cp -r code-review ~/.claude/skills/code-review
+cp -r performance ~/.claude/skills/performance
+cp -r observability ~/.claude/skills/observability
+cp -r documentation ~/.claude/skills/documentation
+cp -r tdd-workflow ~/.claude/skills/tdd-workflow
 ```
 
 ## License
