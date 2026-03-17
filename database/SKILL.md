@@ -85,8 +85,6 @@ last_updated: 2026-03-17
 - [ ] ORM 查询已考虑 N+1 问题
 - [ ] 迁移支持零停机部署
 - [ ] 使用参数化查询（防止 SQL 注入）
-- [ ] API 响应使用统一信封 `{ success, data?, meta?, error? }` + `meta.requestId`
-- [ ] 响应属性使用 camelCase（ORM 负责 snake_case -> camelCase 转换）
 
 ## Output Format
 

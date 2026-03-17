@@ -7,7 +7,7 @@ last_updated: 2026-03-17
 
 # 性能优化技能
 
-## 激活条件
+## When to Activate
 
 以下场景应激活本技能：
 
@@ -19,9 +19,9 @@ last_updated: 2026-03-17
 - 数据库查询优化
 - 打包体积分析与优化
 
-## 工作流程
+## Workflow
 
-### 第一步：测量基线
+### 1. 测量基线
 
 在优化之前，必须先获取当前性能数据作为基线。没有基线的优化是盲目的。
 
@@ -38,7 +38,7 @@ npx lighthouse https://example.com --output=json --output-path=./baseline.json
 k6 run --vus 1 --duration 10s script.js
 ```
 
-### 第二步：识别瓶颈
+### 2. 识别瓶颈
 
 根据基线数据，定位性能瓶颈的根本原因。
 
@@ -47,7 +47,7 @@ k6 run --vus 1 --duration 10s script.js
 - **网络瓶颈**: 未启用压缩、缺少 CDN、过多请求
 - **基础设施瓶颈**: CPU/内存不足、磁盘 I/O 瓶颈
 
-### 第三步：优化
+### 3. 优化
 
 根据瓶颈类型，参考对应的参考文档执行优化：
 
@@ -63,7 +63,7 @@ k6 run --vus 1 --duration 10s script.js
 2. 每次只改一个变量，方便归因
 3. 优化完成后立即验证效果
 
-### 第四步：验证改善
+### 4. 验证改善
 
 优化不以"感觉快了"为标准，必须用数据证明。
 
@@ -117,3 +117,24 @@ npx lighthouse https://example.com --output=json --output-path=./after-optimizat
 - [ ] 基线数据已记录
 - [ ] 优化前后数据对比已记录
 - [ ] Lighthouse CI 或等效工具已集成
+
+## Output Format
+
+```markdown
+# Performance Optimization: {优化目标}
+
+## 基线数据
+{优化前的性能指标}
+
+## 瓶颈分析
+{识别到的性能瓶颈及根因}
+
+## 优化方案
+{执行的优化措施}
+
+## 验证结果
+{优化后的性能指标，与基线对比}
+
+## 审查清单
+{审查结果清单，标记通过/未通过}
+```

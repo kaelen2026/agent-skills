@@ -7,7 +7,7 @@ last_updated: 2026-03-17
 
 # 代码审查技能
 
-## 激活条件
+## When to Activate
 
 以下场景自动激活本技能：
 
@@ -16,9 +16,9 @@ last_updated: 2026-03-17
 - 合并前的最终检查
 - 用户使用 `/code-review` 命令
 
-## 审查工作流
+## Workflow
 
-### 第一步：收集变更
+### 1. 收集变更
 
 读取所有变更文件，理解变更范围和上下文。
 
@@ -41,7 +41,7 @@ git diff main...HEAD --name-only
 git diff main...HEAD
 ```
 
-### 第二步：应用审查清单
+### 2. 应用审查清单
 
 按照 `references/review-checklist.md` 中的清单逐项检查：
 
@@ -54,7 +54,7 @@ git diff main...HEAD
 7. **测试覆盖** — 新逻辑缺少测试
 8. **不可变性** — 直接变异操作
 
-### 第三步：输出审查结果
+### 3. 输出审查结果
 
 使用以下模板输出所有发现：
 
@@ -104,7 +104,7 @@ git diff main...HEAD
 - [ ] 不通过：存在 CRITICAL 问题
 ```
 
-### 第四步：建议修复
+### 4. 建议修复
 
 对于每个 CRITICAL 和 HIGH 问题：
 
@@ -124,3 +124,18 @@ git diff main...HEAD
 
 - [审查清单](references/review-checklist.md) — 按类别的详细检查项
 - [审查流程](references/review-process.md) — 审查流程和反馈模式
+
+## Output Format
+
+```markdown
+# Code Review: {审查范围}
+
+## 审查结果概要
+{问题总数按严重程度分类}
+
+## 问题清单
+{按严重程度排序的问题列表，含文件路径和修复建议}
+
+## 设计审查
+{审查结果清单，标记通过/未通过}
+```

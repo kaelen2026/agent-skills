@@ -40,7 +40,7 @@ last_updated: 2026-03-17
 
 ## Workflow
 
-### Step 1: 编写用户故事
+### 1. 编写用户故事
 
 ```
 作为 [角色]，我希望 [操作]，以便 [收益]
@@ -50,7 +50,7 @@ last_updated: 2026-03-17
 以便即使不知道准确关键词也能找到相关结果。
 ```
 
-### Step 2: 生成测试用例（RED）
+### 2. 生成测试用例（RED）
 
 为每个用户故事创建全面的测试用例：
 
@@ -78,7 +78,7 @@ describe("Semantic Search", () => {
 });
 ```
 
-### Step 3: 运行测试（必须失败）
+### 3. 运行测试（必须失败）
 
 ```bash
 npm test
@@ -87,7 +87,7 @@ npm test
 
 如果测试通过了，说明测试有问题（测试了已有行为或断言不正确）。
 
-### Step 4: 最小实现（GREEN）
+### 4. 最小实现（GREEN）
 
 写刚好让测试通过的代码，不多不少：
 
@@ -97,14 +97,14 @@ export async function searchMarkets(query: string): Promise<Market[]> {
 }
 ```
 
-### Step 5: 再次运行测试
+### 5. 再次运行测试
 
 ```bash
 npm test
 # 所有测试应该通过
 ```
 
-### Step 6: 重构（IMPROVE）
+### 6. 重构（IMPROVE）
 
 保持测试绿色的前提下改善代码质量：
 
@@ -113,7 +113,7 @@ npm test
 - 优化性能
 - 提高可读性
 
-### Step 7: 验证覆盖率
+### 7. 验证覆盖率
 
 ```bash
 npm run test:coverage
@@ -280,7 +280,7 @@ test("updates user", () => {
 }
 ```
 
-## 设计审查清单
+### 8. 设计审查
 
 完成 TDD 循环后，自动检查以下规则：
 

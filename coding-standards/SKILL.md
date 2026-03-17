@@ -55,3 +55,18 @@ last_updated: 2026-03-17
 - [ ] 公共 API 有 JSDoc 文档
 - [ ] 测试遵循 AAA 模式（Arrange-Act-Assert）
 - [ ] 测试名称描述行为而非实现
+
+## Output Format
+
+```markdown
+# Coding Standards Review: {项目/模块名称}
+
+## 审查结果概要
+{问题总数按严重程度分类}
+
+## 问题清单
+{按严重程度排序的问题列表，含文件路径和修复建议}
+
+## 设计审查
+{审查结果清单，标记通过/未通过}
+```

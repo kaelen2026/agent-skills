@@ -7,7 +7,7 @@ last_updated: 2026-03-17
 
 # Git 工作流技能
 
-## 何时激活
+## When to Activate
 
 当用户请求涉及以下场景时，激活此技能：
 
@@ -18,9 +18,9 @@ last_updated: 2026-03-17
 - **变更日志** — 自动或手动维护 CHANGELOG.md
 - **并行开发** — 使用 Git Worktree 同时在多个分支上工作
 
-## 工作流程
+## Workflow
 
-### 第一步：确定分支策略
+### 1. 确定分支策略
 
 根据团队规模和发布频率选择合适的分支策略。
 
@@ -28,7 +28,7 @@ last_updated: 2026-03-17
 2. **推荐大多数项目使用 GitHub Flow**（简洁、适合持续部署）
 3. 确认分支命名规范和保护规则
 
-### 第二步：配置提交规范
+### 2. 配置提交规范
 
 确保每一次提交都清晰、可追溯。
 
@@ -36,7 +36,7 @@ last_updated: 2026-03-17
 2. 在项目中配置 `commitlint` + `husky` + `lint-staged`
 3. 向团队成员说明提交类型和格式要求
 
-### 第三步：设置 PR 规则
+### 3. 设置 PR 规则
 
 保证代码质量和团队协作效率。
 
@@ -44,7 +44,7 @@ last_updated: 2026-03-17
 2. 配置分支保护规则（必须审查、CI 通过、禁止强制推送）
 3. 确定合并策略：功能分支使用 Squash Merge，发布分支使用 Merge Commit
 
-### 第四步：配置发布流程
+### 4. 配置发布流程
 
 自动化版本管理和变更日志生成。
 
@@ -52,7 +52,7 @@ last_updated: 2026-03-17
 2. 配置语义化版本和自动 Changelog 生成工具
 3. 设置 GitHub Actions 自动发布流水线
 
-### 第五步：掌握 Worktree 并行开发
+### 5. 掌握 Worktree 并行开发
 
 当需要同时在多个分支上工作时（紧急修复、并行功能开发、Code Review），使用 Git Worktree。
 
@@ -85,3 +85,21 @@ last_updated: 2026-03-17
 | [提交规范](references/commit-conventions.md) | Conventional Commits、commitlint、husky 配置 |
 | [发布流程](references/release-workflow.md) | 语义化版本、Changelog、GitHub Actions 发布 |
 | [Worktree 并行开发](references/worktree-patterns.md) | Worktree 操作、工作流、目录约定、清理策略 |
+
+## Output Format
+
+```markdown
+# Git Workflow: {操作类型}
+
+## 变更概要
+{变更文件和内容摘要}
+
+## 提交记录
+{提交信息列表}
+
+## PR 信息
+{PR 标题、描述、审查要点}
+
+## 设计审查
+{审查结果清单，标记通过/未通过}
+```
