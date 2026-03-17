@@ -3,6 +3,13 @@ name: planning
 version: 1.0.0
 description: "实现前规划技能。提供功能规格书、实施计划、架构设计的标准化模板。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/docs/specs/**/*"
+    - "**/docs/plans/**/*"
+    - "**/spec.md"
+    - "**/plan.md"
+  priority: 9
 ---
 
 # Planning

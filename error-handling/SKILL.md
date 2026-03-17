@@ -3,6 +3,12 @@ name: error-handling
 version: 1.0.0
 description: "错误处理设计技能。生成错误分类体系、处理模式、日志/监控指南。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/errors.ts"
+    - "**/errors/**/*"
+    - "**/error-handler*"
+  priority: 6
 ---
 
 # Error Handling

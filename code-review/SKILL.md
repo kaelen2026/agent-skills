@@ -3,6 +3,10 @@ name: code-review
 version: 1.0.0
 description: 通用代码审查技能，适用于所有语言和框架的代码质量检查
 last_updated: 2026-03-17
+metadata:
+  bashPattern:
+    - "git diff|git log.*--stat"
+  priority: 6
 ---
 
 # 代码审查技能

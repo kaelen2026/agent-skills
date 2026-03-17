@@ -3,6 +3,15 @@ name: tdd-workflow
 version: 1.0.0
 description: "TDD 工作流技能。强制测试驱动开发，覆盖率 80%+ ，包含单元、集成、E2E 测试。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/*.test.ts"
+    - "**/*.test.tsx"
+    - "**/vitest.config.*"
+    - "**/jest.config.*"
+  bashPattern:
+    - "vitest|jest|npm test|npm run test"
+  priority: 6
 ---
 
 # Test-Driven Development Workflow

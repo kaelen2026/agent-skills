@@ -3,6 +3,16 @@ name: coding-standards
 version: 1.0.0
 description: "通用编码规范技能。覆盖 TypeScript/JavaScript、React、Node.js 的命名、模式、反模式。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/.eslintrc*"
+    - "**/eslint.config.*"
+    - "**/.prettierrc*"
+    - "**/tsconfig.json"
+    - "**/biome.json"
+  bashPattern:
+    - "eslint|prettier|biome|tsc --noEmit"
+  priority: 4
 ---
 
 # Coding Standards

@@ -3,6 +3,12 @@ name: backend-patterns
 version: 1.0.0
 description: "后端架构模式设计技能。生成分层架构代码（Repository / Service / Controller）、数据库查询优化、缓存策略、弹性模式（限流、后台任务、结构化日志）。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/repositories/**/*"
+    - "**/services/**/*"
+    - "**/controllers/**/*"
+  priority: 5
 ---
 
 # Backend Patterns

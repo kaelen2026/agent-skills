@@ -3,6 +3,14 @@ name: auth
 version: 1.0.0
 description: "认证与授权设计技能。涵盖 JWT、OAuth2、RBAC/ABAC、安全检查清单。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/auth/**/*"
+    - "**/middleware/auth*"
+    - "**/lib/auth*"
+  bashPattern:
+    - "jwt|oauth|clerk|auth0|next-auth"
+  priority: 8
 ---
 
 # Auth

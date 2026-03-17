@@ -3,6 +3,15 @@ name: ci-cd
 version: 1.0.0
 description: CI/CD 流水线设计、部署策略与环境管理指南
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/.github/workflows/**/*"
+    - "**/.gitlab-ci.yml"
+    - "**/Dockerfile"
+    - "**/docker-compose*.yml"
+  bashPattern:
+    - "gh workflow|gh run|docker build|vercel deploy"
+  priority: 5
 ---
 
 # CI/CD 技能

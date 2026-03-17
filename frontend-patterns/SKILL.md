@@ -3,6 +3,12 @@ name: frontend-patterns
 version: 1.0.0
 description: "前端开发模式技能。React 组件设计、状态管理、性能优化、可访问性最佳实践。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/components/**/*.tsx"
+    - "**/hooks/use*.ts"
+    - "**/hooks/use*.tsx"
+  priority: 5
 ---
 
 # Frontend Patterns

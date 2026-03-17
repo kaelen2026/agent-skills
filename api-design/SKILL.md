@@ -3,6 +3,15 @@ name: api-design
 version: 1.0.0
 description: "REST API 设计技能。生成 OpenAPI 规范、Markdown 文档、路由代码。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/openapi.{yaml,yml,json}"
+    - "**/swagger.{yaml,yml,json}"
+    - "**/api/**/route.ts"
+    - "**/routes/**/*"
+  bashPattern:
+    - "openapi|swagger"
+  priority: 7
 ---
 
 # API Design

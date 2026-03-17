@@ -3,6 +3,13 @@ name: security-review
 version: 1.0.0
 description: "安全审查技能。覆盖 OWASP Top 10、输入验证、认证授权、密钥管理、部署前检查清单。"
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/.env.example"
+    - "**/security*"
+  bashPattern:
+    - "npm audit|snyk|trivy|gitleaks"
+  priority: 8
 ---
 
 # Security Review

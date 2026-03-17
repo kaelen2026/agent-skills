@@ -3,6 +3,15 @@ name: observability
 version: 1.0.0
 description: 可观测性技能 — 日志、监控、告警、分布式追踪的最佳实践与实施指南
 last_updated: 2026-03-17
+metadata:
+  filePattern:
+    - "**/logger.*"
+    - "**/logging.*"
+    - "**/tracing.*"
+    - "**/instrumentation.ts"
+  bashPattern:
+    - "pino|winston|otel|opentelemetry"
+  priority: 4
 ---
 
 # 可观测性技能
