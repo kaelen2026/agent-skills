@@ -1,8 +1,6 @@
 ---
 name: performance
-version: 1.0.0
 description: 性能优化技能 — Web Vitals、后端性能、负载测试与性能预算
-last_updated: 2026-03-17
 metadata:
   filePattern:
     - "**/lighthouse*"

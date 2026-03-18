@@ -1,8 +1,6 @@
 ---
 name: ci-cd
-version: 1.0.0
 description: CI/CD 流水线设计、部署策略与环境管理指南
-last_updated: 2026-03-17
 metadata:
   filePattern:
     - "**/.github/workflows/**/*"

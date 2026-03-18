@@ -1,8 +1,6 @@
 ---
 name: database
-version: 1.0.0
 description: "Database 设计技能。Schema 设计、迁移生成、查询优化、ORM 代码生成。"
-last_updated: 2026-03-17
 metadata:
   filePattern:
     - "**/schema.prisma"

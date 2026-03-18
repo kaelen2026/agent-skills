@@ -1,8 +1,6 @@
 ---
 name: git-workflow
-version: 1.0.0
 description: Git 工作流管理技能 — 分支策略、提交规范、PR 流程与版本发布的完整指南
-last_updated: 2026-03-17
 metadata:
   filePattern:
     - "**/.husky/**/*"

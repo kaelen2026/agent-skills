@@ -1,8 +1,6 @@
 ---
 name: documentation
-version: 1.0.0
 description: 项目文档编写技能 — ADR、README、API 文档、变更日志等标准化模板与工作流
-last_updated: 2026-03-17
 metadata:
   filePattern:
     - "**/README.md"

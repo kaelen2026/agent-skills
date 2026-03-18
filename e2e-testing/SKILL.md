@@ -1,8 +1,6 @@
 ---
 name: e2e-testing
-version: 1.0.0
 description: "Playwright E2E 测试技能。覆盖 Page Object Model、测试模式、CI/CD 集成、不稳定测试策略。"
-last_updated: 2026-03-17
 metadata:
   filePattern:
     - "**/e2e/**/*"
