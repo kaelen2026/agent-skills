@@ -6,6 +6,8 @@ metadata:
     - "**/repositories/**/*"
     - "**/services/**/*"
     - "**/controllers/**/*"
+  bashPattern:
+    - "express|hono|fastapi|中间件"
   priority: 5
 ---
 

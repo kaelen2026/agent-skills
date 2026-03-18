@@ -7,6 +7,8 @@ metadata:
     - "**/prd.md"
     - "**/docs/specs/**/*"
     - "**/docs/plans/**/*"
+  bashPattern:
+    - "prd|product.requirements|需求"
   priority: 9
 ---
 

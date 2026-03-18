@@ -6,6 +6,8 @@ metadata:
     - "**/components/**/*.tsx"
     - "**/hooks/use*.ts"
     - "**/hooks/use*.tsx"
+  bashPattern:
+    - "react|next|vite|组件"
   priority: 5
 ---
 

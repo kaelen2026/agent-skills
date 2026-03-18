@@ -6,6 +6,8 @@ metadata:
     - "**/errors.ts"
     - "**/errors/**/*"
     - "**/error-handler*"
+  bashPattern:
+    - "throw|catch|Error|错误"
   priority: 6
 ---
 

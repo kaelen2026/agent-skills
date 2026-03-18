@@ -7,6 +7,8 @@ metadata:
     - "**/docs/plans/**/*"
     - "**/spec.md"
     - "**/plan.md"
+  bashPattern:
+    - "spec|plan|规划"
   priority: 9
 ---
 

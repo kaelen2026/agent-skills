@@ -27,7 +27,7 @@ Cross-cutting concerns have a single owner to avoid duplication:
 | Auth security (httpOnly/CSRF) | auth | security-review (general OWASP audit) |
 | Pre-commit hooks | git-workflow | — |
 
-## Skills (18)
+## Skills (20)
 
 ### prd
 
@@ -156,6 +156,10 @@ Performance optimization — Web Vitals, backend performance, load testing, perf
 ### documentation
 
 Project documentation — ADR, README, API docs, changelog templates and workflows.
+
+### tutorial
+
+Interactive guided practice — 20 skills across 4 difficulty levels (beginner → expert). Generates realistic scenarios, provides step-by-step guidance, and evaluates with scoring rubrics.
 
 ## Installation
 

@@ -7,6 +7,8 @@ metadata:
     - "**/CONTRIBUTING.md"
     - "**/CHANGELOG.md"
     - "**/docs/adr/**/*"
+  bashPattern:
+    - "readme|adr|changelog|文档"
   priority: 3
 ---
 

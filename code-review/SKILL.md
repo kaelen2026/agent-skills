@@ -2,6 +2,11 @@
 name: code-review
 description: 通用代码审查技能，适用于所有语言和框架的代码质量检查
 metadata:
+  filePattern:
+    - "**/*.ts"
+    - "**/*.tsx"
+    - "**/*.js"
+    - "**/*.jsx"
   bashPattern:
     - "git diff|git log.*--stat"
   priority: 6
