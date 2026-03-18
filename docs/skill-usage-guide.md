@@ -1,6 +1,6 @@
 # Agent Skills 完整使用指南：从0实现用户评论系统
 
-> 本文档演示如何在一个真实需求中，串联使用 agent-skills 项目的 17 个 skill，从需求分析到代码交付的完整流程。
+> 本文档演示如何在一个真实需求中，串联使用 agent-skills 项目的 19 个 skill，从需求分析到代码交付的完整流程。
 
 ## 需求概述
 
@@ -13,14 +13,15 @@
 ## 全局流程总览
 
 ```
-需求 → planning → api-design → database → auth → error-handling
-     → backend-patterns → frontend-patterns → coding-standards
-     → tdd-workflow → e2e-testing → security-review → code-review
-     → git-workflow → ci-cd → observability → documentation → performance
+prd → grill-me → planning → api-design → database → auth → error-handling
+   → backend-patterns → frontend-patterns → coding-standards
+   → tdd-workflow → e2e-testing → security-review → code-review
+   → git-workflow → ci-cd → observability → documentation → performance
 ```
 
 | 阶段 | 激活的 Skill | 输出物 |
 |------|-------------|--------|
+| 0. 需求定义 | `prd` + `grill-me` | PRD 文档, 垂直切片实施规格 |
 | 1. 需求规划 | `planning` | spec.md, plan.md |
 | 2. API 设计 | `api-design` | openapi.yaml, API.md, 路由代码 |
 | 3. 数据库设计 | `database` | schema.prisma, 迁移脚本 |
@@ -41,15 +42,55 @@
 
 ---
 
+## 阶段 0: 需求定义
+
+### 激活 Skill: `prd` + `grill-me`
+
+**触发条件**: 用户有新功能想法但尚未形成完整需求文档
+
+> `prd` 就像记者采访——先深挖问题全貌，再写报道，最后拆成施工工序。
+> `grill-me` 就像律师交叉询问——确保每个关键决策都经过深思熟虑，没有盲区。
+
+#### 步骤 0.1: 编写 PRD（`prd` Phase 1）
+
+1. **收集问题描述** — 向用户询问痛点、初步方案、目标用户
+2. **探索代码库** — 扫描现有架构，识别集成点和约束
+3. **深挖需求（调用 `grill-me`）** — 通过决策树遍历式提问，暴露隐含假设、消除模糊性
+4. **生成 PRD 文档** — 输出结构化的产品需求文档
+
+#### 步骤 0.2: 追问深挖（`grill-me`）
+
+`grill-me` 在 PRD 编写过程中被调用，按影响力排序提问：
+
+- **边界情况** — "如果 X 发生了怎么办？"
+- **优先级冲突** — "A 和 B 冲突时选哪个？"
+- **范围模糊** — "这个算 MVP 还是后续迭代？"
+- **隐含假设** — "你假设了 X，但如果不是呢？"
+- **技术选型** — "为什么选 A 而不是 B？"
+
+排序原则：影响架构 > 影响数据模型 > 影响 API > 影响 UI > 影响文案
+
+#### 步骤 0.3: 拆解实施规格（`prd` Phase 2）
+
+将 PRD 拆解为垂直切片实施规格，每个切片是一个可独立交付的用户故事。
+
+**输出物**:
+
+- `docs/prd/comment-system-prd.md` — 产品需求文档
+- `docs/specs/comment-system-spec.md` — 垂直切片实施规格
+
+---
+
 ## 阶段 1: 需求规划
 
 ### 激活 Skill: `planning`
 
-**触发条件**: 新功能设计 + 预计修改 3+ 文件 → HARD-GATE 触发
+**触发条件**: PRD 和实施规格就绪，或新功能设计 + 预计修改 3+ 文件 → HARD-GATE 触发
 
 #### 步骤 1.1: 判断文档类型
 
 本需求属于"大型功能"，需要生成全部三类文档：
+
 - 功能规格书 (Spec) → 定义"做什么"
 - 架构设计 → 定义"怎么做"
 - 实施计划 (Plan) → 定义"分几步做"
@@ -202,6 +243,7 @@ THEN 返回 403 Forbidden
 #### 步骤 1.5: 设计审查
 
 `planning` skill 自动检查清单：
+
 - [x] 功能范围明确（包含/不包含已定义）
 - [x] 用户故事覆盖主要角色和场景（5 个故事）
 - [x] API 变更包含完整端点（Phase 2 定义）
@@ -236,7 +278,7 @@ THEN 返回 403 Forbidden
 
 #### 步骤 2.2: 设计 API（结论先行）
 
-```
+```markdown
 ## API 端点总览
 
 | Method | Path                            | Description      | Auth |
@@ -255,16 +297,19 @@ THEN 返回 403 Forbidden
 
 **A. OpenAPI 规范 (`openapi.yaml`)**
 遵循 `api-design/references/openapi-conventions.md`：
+
 - 使用 PascalCase schema 命名: `Comment`, `CreateCommentRequest`, `CommentResponse`
 - 属性 camelCase，布尔前缀 `is`/`has`，时间戳后缀 `At`
 - 统一响应信封
 
 **B. API 文档 (`API.md`)**
 遵循 `api-design/references/documentation-template.md`：
+
 - 包含认证说明、请求/响应示例、错误码、速率限制
 
 **C. 路由代码**
 遵循 `api-design/references/design-rules.md`：
+
 - Next.js App Router 风格
 - zod 请求体验证
 - 统一错误响应
@@ -272,6 +317,7 @@ THEN 返回 403 Forbidden
 #### 步骤 2.4: 设计审查
 
 `api-design` skill 检查清单：
+
 - [x] URL 使用复数名词 (`/comments`)
 - [x] 正确使用 HTTP 方法语义
 - [x] 一致的错误响应格式
@@ -295,6 +341,7 @@ THEN 返回 403 Forbidden
 #### 步骤 3.1: Schema 设计
 
 遵循 `database/references/schema-design.md` 命名规范：
+
 - 表名: 复数 snake_case (`comments`, `comment_likes`, `comment_reports`)
 - 列名: snake_case，主键 `id` (UUID)，外键 `{singular}_id`
 - 布尔前缀 `is_`/`has_`，时间戳后缀 `_at`
@@ -357,6 +404,7 @@ model CommentReport {
 #### 步骤 3.2: 查询优化
 
 遵循 `database/references/query-patterns.md`：
+
 - 使用 Prisma `include` 预加载防止 N+1
 - cursor-based 分页
 - 选择性 `select` 避免 SELECT *
@@ -364,6 +412,7 @@ model CommentReport {
 #### 步骤 3.3: 迁移策略
 
 遵循 `database/references/migration-patterns.md`：
+
 - 仅前进迁移（无 down migration）
 - 新增表不需要 expand-contract（首次创建）
 - 添加索引使用 `CREATE INDEX CONCURRENTLY`
@@ -409,6 +458,7 @@ interface JwtPayload {
 #### 步骤 4.3: 安全检查清单
 
 遵循 `auth/references/security-checklist.md`：
+
 - [x] 使用 httpOnly Secure Cookie 存储 Token
 - [x] Token 过期时间合理（Access ≤15min）
 - [x] 授权检查在所有敏感操作前执行
@@ -579,6 +629,7 @@ export function createCommentService(repo: CommentRepository) {
 #### 步骤 6.4: 设计审查
 
 `backend-patterns` skill 检查清单：
+
 - [x] Repository/Service 分离
 - [x] Controller 不含业务逻辑
 - [x] 统一响应信封
@@ -615,6 +666,7 @@ CommentSection (容器组件)
 #### 步骤 7.2: 组合模式
 
 遵循 `frontend-patterns` 的组合优先原则：
+
 - 使用组合而非继承
 - TypeScript 接口定义 props
 - 单一职责
@@ -763,6 +815,7 @@ npm test
 #### 步骤 9.6: Mock 模式
 
 遵循 `tdd-workflow/references/mocking-patterns.md`：
+
 - 只 mock 外部依赖（Prisma Client）
 - 不 mock 被测代码内部逻辑
 - 每个 mock 在 afterEach 中恢复
@@ -780,6 +833,7 @@ npm run test:coverage
 #### 步骤 9.8: 设计审查
 
 `tdd-workflow` skill 检查清单：
+
 - [x] 所有测试通过（0 failures）
 - [x] 覆盖率 ≥ 80%
 - [x] 无 skip 或 todo 测试
@@ -875,6 +929,7 @@ test.describe("Comment System", () => {
 #### 步骤 12.1: 应用审查清单
 
 遵循 `code-review/references/review-checklist.md`，按 8 个维度检查：
+
 1. 正确性 2. 安全性 3. 性能 4. 可维护性 5. 类型安全 6. 错误处理 7. 测试覆盖 8. 不可变性
 
 #### 步骤 12.2: 输出审查报告
@@ -896,25 +951,30 @@ test.describe("Comment System", () => {
 ## 阶段 13-17: 补充 Skill
 
 ### `git-workflow` (阶段 13)
+
 - 分支: `feat/comment-system`
 - Commit 规范: Conventional Commits (`feat:`, `fix:`, `test:`)
 - PR 模板: Summary + Test Plan
 
 ### `ci-cd` (阶段 14)
+
 - GitHub Actions: lint → test → build → deploy
 - 自动运行测试 + 覆盖率检查
 
 ### `observability` (阶段 15)
+
 - 结构化日志 (pino)
 - requestId 全链路传递
 - 评论 API 响应时间监控
 
 ### `documentation` (阶段 16)
+
 - ADR: "为什么选择 cursor 分页而非 offset"
 - README 更新: 评论系统使用说明
 - API 文档更新
 
 ### `performance` (阶段 17)
+
 - 评论列表查询 EXPLAIN ANALYZE
 - 索引优化验证
 - 前端: 虚拟列表（长评论列表）、图片懒加载
@@ -924,6 +984,8 @@ test.describe("Comment System", () => {
 ## Skill 协作关系图
 
 ```
+               prd + grill-me
+                       │
                     planning
                        │
               ┌────────┼────────┐
@@ -963,11 +1025,12 @@ test.describe("Comment System", () => {
 
 ## 总结: Skill 使用最佳实践
 
-1. **总是从 `planning` 开始** — HARD-GATE 规则：3+ 文件变更必须先做计划
-2. **结论先行** — 所有 skill 的输出都遵循"先结论后细节"原则
-3. **设计审查是每个 skill 的最后一步** — 用清单验证质量
-4. **Skill 之间有依赖关系** — planning 的输出是 api-design/database 的输入
-5. **`coding-standards` 贯穿全程** — 每个阶段都要检查编码规范
-6. **不可变性是核心原则** — 所有 skill 都强调不可变数据操作
-7. **统一响应信封** — `{ success, data?, meta?, error? }` 是全局约定
-8. **TDD 不可协商** — 先测试后实现，覆盖率 ≥ 80%
+1. **从 `prd` + `grill-me` 开始定义需求** — 先写 PRD，用追问消除模糊性，再拆解为实施规格
+2. **`planning` 做实施规划** — HARD-GATE 规则：3+ 文件变更必须先做计划
+3. **结论先行** — 所有 skill 的输出都遵循"先结论后细节"原则
+4. **设计审查是每个 skill 的最后一步** — 用清单验证质量
+5. **Skill 之间有依赖关系** — prd 的输出是 planning 的输入，planning 的输出是 api-design/database 的输入
+6. **`coding-standards` 贯穿全程** — 每个阶段都要检查编码规范
+7. **不可变性是核心原则** — 所有 skill 都强调不可变数据操作
+8. **统一响应信封** — `{ success, data?, meta?, error? }` 是全局约定
+9. **TDD 不可协商** — 先测试后实现，覆盖率 ≥ 80%
