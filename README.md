@@ -27,7 +27,7 @@ Cross-cutting concerns have a single owner to avoid duplication:
 | Auth security (httpOnly/CSRF) | auth | security-review (general OWASP audit) |
 | Pre-commit hooks | git-workflow | — |
 
-## Skills (20)
+## Skills (21)
 
 ### prd
 
@@ -160,6 +160,10 @@ Project documentation — ADR, README, API docs, changelog templates and workflo
 ### tutorial
 
 Interactive guided practice — 20 skills across 4 difficulty levels (beginner → expert). Generates realistic scenarios, provides step-by-step guidance, and evaluates with scoring rubrics.
+
+### write-a-skill
+
+Agent Skill 编写技能 — standardized workflow for creating new skills: structure design, frontmatter configuration, references authoring, and review checklists. Includes project best practices distilled from 20 existing skills.
 
 ## Installation
 
