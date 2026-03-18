@@ -104,7 +104,7 @@ npx lighthouse https://example.com --output=json --output-path=./after-optimizat
 ### 后端性能
 
 - [ ] API P95 响应时间 < 500ms
-- [ ] 无 N+1 查询问题
+- [ ] 无 N+1 查询问题（审计角色，实现 → 参见 [database](../database/SKILL.md) + [backend-patterns](../backend-patterns/SKILL.md)）
 - [ ] 热点数据已缓存（合理的 TTL）
 - [ ] 数据库索引已优化
 - [ ] 响应压缩已启用（gzip/brotli）
@@ -115,7 +115,6 @@ npx lighthouse https://example.com --output=json --output-path=./after-optimizat
 - [ ] CDN 已配置并生效
 - [ ] 连接池大小合理
 - [ ] 耗时操作已异步化
-- [ ] 限流已配置（防止过载）
 
 ### 流程保障
 

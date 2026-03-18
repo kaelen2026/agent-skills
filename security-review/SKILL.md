@@ -64,13 +64,13 @@ metadata:
 - [ ] 所有数据库查询使用参数化查询
 - [ ] 用户提供的 HTML 已净化
 - [ ] CSRF 保护已启用
-- [ ] 认证使用 httpOnly cookie
+- [ ] 认证使用 httpOnly cookie → 实现细节参见 [auth](../auth/SKILL.md)
 - [ ] 授权检查在所有敏感操作前
-- [ ] 所有 API 端点已启用速率限制
+- [ ] 所有 API 端点已启用速率限制（审计角色，实现 → 参见 [backend-patterns](../backend-patterns/SKILL.md)）
 - [ ] HTTPS 在生产环境强制启用
 - [ ] 安全头已配置（CSP, X-Frame-Options）
 - [ ] 错误消息不泄露敏感信息
-- [ ] 日志不记录密码/token/PII
+- [ ] 日志不记录密码/token/PII → 详细规范参见 [observability](../observability/SKILL.md)
 - [ ] 依赖无已知漏洞（`npm audit`）
 - [ ] 文件上传已验证（大小、类型）
 - [ ] CORS 已正确配置

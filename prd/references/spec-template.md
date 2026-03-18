@@ -1,6 +1,6 @@
 # Spec Template (垂直切片)
 
-> 用于 `prd-to-spec` 技能的实施规格模板。
+> 用于 `prd` 技能 Phase 2 的实施规格模板。
 
 ```markdown
 # {功能名称} — 实施规格

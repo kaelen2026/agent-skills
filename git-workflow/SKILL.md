@@ -1,13 +1,16 @@
 ---
 name: git-workflow
-description: Git 工作流管理技能 — 分支策略、提交规范、PR 流程与版本发布的完整指南
+description: "Git 工作流管理技能 — 分支策略、提交规范、PR 流程、版本发布、Pre-commit Hook 设置的完整指南"
 metadata:
   filePattern:
     - "**/.husky/**/*"
     - "**/commitlint.config.*"
     - "**/.github/pull_request_template.md"
+    - "**/.lintstagedrc"
+    - "**/biome.json"
+    - "**/biome.jsonc"
   bashPattern:
-    - "git branch|git merge|git rebase|git worktree|commitlint"
+    - "git branch|git merge|git rebase|git worktree|commitlint|husky|lint-staged|biome"
   priority: 5
 ---
 
@@ -82,6 +85,80 @@ metadata:
 - [ ] **过期分支清理机制** — 已合并分支定期清理，避免仓库膨胀
 - [ ] **Worktree 使用规范** — 完成后及时清理，不手动删除目录
 - [ ] **Worktree 目录约定** — 命名统一，位置一致（同级或子目录）
+- [ ] **Pre-commit hook 已配置** — `.husky/pre-commit` 存在且可执行
+- [ ] **lint-staged 已配置** — `.lintstagedrc` 存在，只处理暂存文件
+- [ ] **Biome 同时处理 format 和 lint** — 不需要单独的 eslint
+- [ ] **现有 Biome 配置未被覆盖** — 仅在不存在时创建
+
+### 6. 设置 Pre-Commit Hooks
+
+就像出门前的检查清单——钥匙、钱包、手机。Pre-commit hook 确保每次提交前代码都经过格式化、lint、类型检查和测试。
+
+#### 6.1 检测包管理器
+
+检查锁文件：`package-lock.json`（npm）、`pnpm-lock.yaml`（pnpm）、`yarn.lock`（yarn）、`bun.lockb`（bun）。默认 npm。
+
+#### 6.2 安装依赖
+
+作为 devDependencies 安装：
+
+```
+husky lint-staged @biomejs/biome
+```
+
+#### 6.3 初始化 Husky
+
+```bash
+npx husky init
+```
+
+创建 `.husky/` 目录，并在 package.json 添加 `prepare: "husky"`。
+
+#### 6.4 创建 `.husky/pre-commit`
+
+Husky v9+ 不需要 shebang：
+
+```
+npx lint-staged
+npm run typecheck
+npm run test
+```
+
+**适配**：将 `npm` 替换为检测到的包管理器。如果 package.json 没有 `typecheck` 或 `test` 脚本，省略对应行并告知用户。
+
+#### 6.5 创建 `.lintstagedrc`
+
+```json
+{
+  "*": "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+}
+```
+
+`--files-ignore-unknown=true` 跳过 Biome 不支持的文件（图片等）。
+
+#### 6.6 创建 `biome.json`（如不存在）
+
+仅在没有 Biome 配置时创建：
+
+```json
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "quoteStyle": "single"
+  },
+  "linter": {
+    "enabled": true
+  },
+  "json": {
+    "formatter": {
+      "enabled": false
+    }
+  }
+}
+```
 
 ## 参考文档
 

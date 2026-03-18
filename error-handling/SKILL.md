@@ -85,18 +85,14 @@ metadata:
 生成完成后，自动检查以下规则：
 
 - [ ] 所有错误均继承 AppError 基类
-- [ ] 遵循统一信封 `{ success: false, error, meta }` 格式
-- [ ] 所有错误响应中包含 `meta.requestId`
+- [ ] 遵循统一响应信封 → 参见 [api-design](../api-design/SKILL.md) 响应规范
 - [ ] 错误码使用 UPPER_SNAKE_CASE
-- [ ] 响应属性使用 camelCase
-- [ ] 已定义 `X-Device-Type` 头部的验证错误
 - [ ] Operational 错误与 Programmer 错误明确分离
 - [ ] 堆栈跟踪不会泄露到生产响应中
-- [ ] 日志中不包含密码、令牌、PII
 - [ ] 外部 API 调用已实现重试策略
 - [ ] 存在全局 uncaught exception 处理器
 - [ ] Zod 验证错误已转换为统一格式
-- [ ] 日志包含 requestId, timestamp, level
+- [ ] 日志规范 → 参见 [observability](../observability/SKILL.md) 日志审查项
 
 ## Output Format
 

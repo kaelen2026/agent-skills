@@ -1,6 +1,6 @@
 # PRD Template
 
-> 用于 `write-a-prd` 技能的 GitHub Issue 模板。
+> 用于 `prd` 技能 Phase 1 的 PRD 模板。
 
 ```markdown
 ## 问题描述

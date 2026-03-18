@@ -97,18 +97,14 @@ metadata:
 - [ ] Repository 接口与实现分离
 - [ ] Service 层不直接访问数据库客户端
 - [ ] Controller 不包含业务逻辑
-- [ ] 统一响应信封 `{ success, data?, meta?, error? }`
-- [ ] `meta.requestId` 始终存在
-- [ ] 所有响应属性使用 camelCase
-- [ ] `X-Device-Type` header 已验证
-- [ ] N+1 查询问题已通过批量查询解决
+- [ ] 遵循统一响应信封 → 参见 [api-design](../api-design/SKILL.md) 响应规范
+- [ ] N+1 查询问题已通过批量查询解决（应用层 batching）
 - [ ] SELECT 仅选取需要的列（非 `SELECT *`）
 - [ ] 事务中包含正确的回滚处理
 - [ ] 缓存设置了合理的 TTL
 - [ ] 缓存在数据变更时主动失效
-- [ ] 限流策略已在关键端点上生效
-- [ ] 结构化日志包含 requestId、timestamp、level
-- [ ] 日志中不包含密码、令牌、PII
+- [ ] 限流策略已在关键端点上生效（实现 owner）
+- [ ] 日志规范 → 参见 [observability](../observability/SKILL.md) 日志审查项
 - [ ] 不可变模式（`readonly` 属性、新对象创建）
 - [ ] 无硬编码配置值
 

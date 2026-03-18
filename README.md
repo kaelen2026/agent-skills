@@ -6,13 +6,40 @@ A collection of reusable skills for Claude Code.
 
 All skills follow these conventions:
 
-- Unified response envelope: `{ success, data?, meta?, error? }`
+- Unified response envelope: `{ success, data?, meta?, error? }` — defined in [api-design](api-design/SKILL.md), other skills reference it
 - `meta.requestId` always present for request tracing
 - Required header: `X-Device-Type: web | app | desktop`
 - Response properties: **camelCase**
 - Error codes: **UPPER_SNAKE_CASE**
+- Structured logging standards — defined in [observability](observability/SKILL.md), other skills reference it
+- Rate limiting implementation — owned by [backend-patterns](backend-patterns/SKILL.md), audited by security-review/performance
 
-## Skills
+## Ownership Matrix
+
+Cross-cutting concerns have a single owner to avoid duplication:
+
+| Concern | Owner (defines) | References (audits/uses) |
+|---------|----------------|--------------------------|
+| Response envelope | api-design | auth, backend-patterns, error-handling |
+| Structured logging | observability | backend-patterns, error-handling, security-review |
+| N+1 query (schema/index) | database | backend-patterns (app layer), performance (audit) |
+| Rate limiting (impl) | backend-patterns | security-review (audit), auth (auth endpoints) |
+| Auth security (httpOnly/CSRF) | auth | security-review (general OWASP audit) |
+| Pre-commit hooks | git-workflow | — |
+
+## Skills (18)
+
+### prd
+
+Product requirements full lifecycle — Phase 1: interactive PRD writing (user interviews + codebase exploration + deep module design). Phase 2: decompose PRD into vertical-slice implementation specs.
+
+### planning
+
+Implementation planning — feature specs, implementation plans, architecture design templates.
+
+### grill-me
+
+Universal probing skill — decision-tree traversal questioning to uncover requirement blind spots, expose hidden assumptions, and eliminate ambiguity.
 
 ### api-design
 
@@ -28,7 +55,6 @@ Error handling patterns and error taxonomy:
 
 - **Error taxonomy** — Operational vs Programmer errors, custom error class hierarchy
 - **Handling patterns** — Express/Next.js/Hono/FastAPI error handlers, retry, circuit breaker
-- **Logging & monitoring** — Structured logging, alert thresholds, requestId correlation
 
 ### auth
 
@@ -68,9 +94,9 @@ Frontend development patterns for React, Next.js, and performant UIs:
 Backend architecture patterns for scalable server-side applications:
 
 - **Architecture patterns** — Repository / Service / Controller layers, middleware pipeline, dependency injection
-- **Database optimization** — N+1 prevention, SELECT minimization, transactions, indexing, connection pooling, pagination
+- **Database optimization** — N+1 prevention (app layer), SELECT minimization, transactions, connection pooling
 - **Caching strategies** — Redis decorator pattern, Cache-Aside, multi-level caching, HTTP cache headers
-- **Resilience patterns** — Rate limiting, background jobs, structured logging, health checks, graceful shutdown
+- **Resilience patterns** — Rate limiting (implementation owner), background jobs, health checks, graceful shutdown
 
 ### e2e-testing
 
@@ -78,79 +104,58 @@ Playwright E2E testing patterns:
 
 - **Page Object Model** — Base class, page classes, auth fixtures, storageState reuse
 - **Test patterns** — Wait strategies, flaky test fixes, API mocking, critical flow testing
-- **Config & CI/CD** — Playwright config, artifact management, GitHub Actions, sharding
-
-### security-review
-
-Security review and OWASP Top 10 compliance:
-
-- **Secrets & input** — Secret management, zod validation, file upload, data sanitization
-- **Injection & XSS** — SQL injection prevention, CSP, CSRF protection, rate limiting
-- **Auth & access** — Token storage, authorization checks, RLS, security testing
-- **Deployment checklist** — Pre-deployment security verification
-
-### git-workflow
-
-Git branching, commit conventions, and release management:
-
-- **Branching strategy** — GitHub Flow, branch naming, PR template, protection rules
-- **Commit conventions** — Conventional Commits, commitlint, husky + lint-staged
-- **Release workflow** — Semantic Versioning, changelog generation, hotfix flow
-
-### ci-cd
-
-CI/CD pipeline design and deployment automation:
-
-- **Pipeline design** — GitHub Actions workflows, caching, parallel jobs, monorepo CI
-- **Deployment strategies** — Blue-green, canary, rolling, feature flags
-- **Environment management** — Tier config, secret management, preview deployments
-
-### code-review
-
-Code review process and quality checklist:
-
-- **Review checklist** — Correctness, security, performance, maintainability, type safety
-- **Review process** — Feedback patterns, approval criteria, PR size guidelines, CODEOWNERS
-
-### performance
-
-Frontend and backend performance optimization:
-
-- **Web Vitals** — LCP, INP, CLS optimization, image/font/bundle optimization
-- **Backend performance** — Query optimization, caching layers, compression, pagination
-- **Load testing** — k6 scripts, test types, performance budgets, CI integration
-
-### observability
-
-Monitoring, logging, and distributed tracing:
-
-- **Logging** — Structured JSON logging, pino setup, sensitive data filtering
-- **Monitoring & alerting** — RED/USE methods, SLO/SLI, dashboard design, alert rules
-- **Tracing** — OpenTelemetry, requestId propagation, health checks, graceful degradation
-
-### documentation
-
-Technical documentation and architecture decision records:
-
-- **ADR template** — Architecture Decision Records with examples
-- **Project docs** — README, CONTRIBUTING, CHANGELOG, GitHub templates
-- **API docs** — Endpoint documentation, SDK examples, versioning, migration guides
+- **CI/CD integration** — Parallel execution, sharding, retry configuration, artifact collection
 
 ### tdd-workflow
 
-Test-driven development workflow enforcing test-first discipline:
+Test-driven development workflow enforcing 80%+ coverage:
 
-- **TDD cycle** — RED (write failing test) → GREEN (minimal implementation) → IMPROVE (refactor)
-- **Test patterns** — Unit (Vitest/Jest), integration (API routes), E2E (Playwright) with AAA pattern
-- **Quality gates** — 80%+ coverage threshold, no skipped tests, independent test isolation
+- **Unit testing** — Vitest/Jest patterns, mocking, snapshot testing
+- **Integration testing** — API testing, database testing, service testing
+- **E2E testing** — Critical path coverage, smoke tests
 
-### planning
+### security-review
 
-Implementation planning skill providing standardized templates for specs, plans, and architecture design:
+Security audit skill covering OWASP Top 10:
 
-- **Feature spec** — User stories, functional requirements (MUST/SHOULD/COULD), API/DB changes, acceptance criteria
-- **Implementation plan** — Phased task breakdown, file manifests, dependency graphs, risk assessment
-- **Architecture design** — Tech selection framework, trade-off analysis, C4 model, common pattern guidance (Monolith vs Microservices, SSR vs SPA, SQL vs NoSQL)
+- **Secrets & input** — Environment variables, zod validation, file upload security
+- **Injection & XSS** — Parameterized queries, HTML sanitization, CSP headers
+- **Auth & access** — httpOnly cookies (audits, impl → auth), RLS, CORS
+- **Deployment checklist** — Rate limiting (audits, impl → backend-patterns), dependency audit, HTTPS
+
+### code-review
+
+Universal code review skill for all languages and frameworks.
+
+### git-workflow
+
+Git workflow management — branching strategy, commit conventions, PR process, release workflow, worktree parallel development, and pre-commit hook setup (Husky + lint-staged + Biome).
+
+### ci-cd
+
+CI/CD pipeline design, deployment strategies, and environment management.
+
+### observability
+
+Observability skill — logging (owner), monitoring, alerting, distributed tracing best practices:
+
+- **Logging** — Structured JSON, requestId propagation, PII filtering (authoritative source)
+- **Monitoring** — RED/USE metrics, SLO/SLI, dashboards
+- **Alerting** — Severity levels, routing, runbooks
+- **Tracing** — OpenTelemetry, span attributes, context propagation
+
+### performance
+
+Performance optimization — Web Vitals, backend performance, load testing, performance budgets:
+
+- **Frontend** — LCP, INP, CLS, bundle size, image/font optimization
+- **Backend** — P95 latency, caching, index optimization, compression
+- **Infrastructure** — CDN, connection pooling, async operations
+- **Process** — Performance budgets, Lighthouse CI
+
+### documentation
+
+Project documentation — ADR, README, API docs, changelog templates and workflows.
 
 ## Installation
 
@@ -160,29 +165,6 @@ Symlink skill directories into `~/.claude/skills/` (source updates are reflected
 mkdir -p ~/.claude/skills
 
 # From the repo root
-ln -sf "$(pwd)/api-design" ~/.claude/skills/api-design
-ln -sf "$(pwd)/error-handling" ~/.claude/skills/error-handling
-ln -sf "$(pwd)/auth" ~/.claude/skills/auth
-ln -sf "$(pwd)/database" ~/.claude/skills/database
-ln -sf "$(pwd)/coding-standards" ~/.claude/skills/coding-standards
-ln -sf "$(pwd)/frontend-patterns" ~/.claude/skills/frontend-patterns
-ln -sf "$(pwd)/backend-patterns" ~/.claude/skills/backend-patterns
-ln -sf "$(pwd)/e2e-testing" ~/.claude/skills/e2e-testing
-ln -sf "$(pwd)/security-review" ~/.claude/skills/security-review
-ln -sf "$(pwd)/git-workflow" ~/.claude/skills/git-workflow
-ln -sf "$(pwd)/ci-cd" ~/.claude/skills/ci-cd
-ln -sf "$(pwd)/code-review" ~/.claude/skills/code-review
-ln -sf "$(pwd)/performance" ~/.claude/skills/performance
-ln -sf "$(pwd)/observability" ~/.claude/skills/observability
-ln -sf "$(pwd)/documentation" ~/.claude/skills/documentation
-ln -sf "$(pwd)/tdd-workflow" ~/.claude/skills/tdd-workflow
-ln -sf "$(pwd)/planning" ~/.claude/skills/planning
-```
-
-Or link all skills at once:
-
-```bash
-mkdir -p ~/.claude/skills
 for skill in */; do
   [ -f "$skill/SKILL.md" ] && ln -sf "$(pwd)/$skill" ~/.claude/skills/
 done

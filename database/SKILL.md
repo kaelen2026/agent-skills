@@ -89,7 +89,7 @@ metadata:
 - [ ] 主键使用 UUID（`gen_random_uuid()`）
 - [ ] 时间戳使用 TIMESTAMPTZ
 - [ ] ENUM 类型或 CHECK 约束使用得当
-- [ ] ORM 查询已考虑 N+1 问题
+- [ ] ORM 查询已考虑 N+1 问题（schema/索引层 owner，应用层 → 参见 [backend-patterns](../backend-patterns/SKILL.md)）
 - [ ] 迁移支持零停机部署
 - [ ] 使用参数化查询（防止 SQL 注入）
 

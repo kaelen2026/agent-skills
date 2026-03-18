@@ -90,10 +90,7 @@ metadata:
 - [ ] 令牌验证使用时序安全比较
 - [ ] 认证事件输出审计日志
 - [ ] 错误消息未泄露内部信息
-- [ ] 使用统一响应信封（`success`、`data?`、`meta?`、`error?`）
-- [ ] `meta.requestId` 存在于所有响应中
-- [ ] 所有响应属性使用 camelCase
-- [ ] 已验证 `X-Device-Type` 头
+- [ ] 使用统一响应信封 → 参见 [api-design](../api-design/SKILL.md) 响应规范
 - [ ] Cookie 认证场景中 CSRF 防护已启用
 - [ ] OAuth2 公共客户端已应用 PKCE
 
